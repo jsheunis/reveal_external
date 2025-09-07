@@ -1,43 +1,55 @@
 # External.js
 
 This is a plugin for Reveal.js. It allows you to specify external files to be loaded into a presentation. This extension also allows external files in already external files (Subfiles). It allows a course, which may be hundreds of slides, to be broken into modules and managed individually.
+
+This version of the plugin has been modified to be compatible with the latest Reveal.js (5, at the time of writing).
  
 ## Installation
 
-There are several ways to install reveal_external: 
+Download external/external.js and save it to your project structure. E.g.:
 
-- The manual way: Download external/external.js and save it to your project structure
-- Install with [bower](https://www.bower.io): `bower install reveal_external` 
-- Install with [npm](https://www.npmjs.com): `npm install reveal_external`
+```
+MyProject
+.
+├── myslides.html
+└── reveal.js
+    └── plugin
+        └── external
+            └── external.js
+```
+
 
 ## Example
 
-Please find the `example` folder in this repository for a working demo presentation.
+Example usage available at: https://hub.datalad.org/edu/slides
 
 
 ## Using external.js
 
-Using the plugin is easy. First, register it in your Reveal.js initialize block.
+Using the plugin is easy. Include it in your reveal slides like this:
 
-```javascript
-{ 
-    src: 'plugin/external/external.js', 
-    condition: function() { 
-        return !!document.querySelector( '[data-external],[data-external-replace]' ); 
-    } 
-},
+```html
+<script src="../reveal.js/dist/reveal.js"></script>
+<script src="../reveal.js/plugin/external/external.js"></script>
+<script>
+Reveal.initialize({
+	...
+	plugins: [ RevealExternal ]
+})
+</script>
 ```
-Then simply add an element into your presentation with a data-external or data-external-replace attribute.
 
-### data-external
+Then simply add an element into your presentation with a `data-external` or `data-external-replace` attribute.
 
-Will put the loaded content into the node with the data-external attribute.
+### `data-external`
+
+Will put the loaded content into the node with the `data-external` attribute.
 
 ```html
 <section data-external="module_01/index.html"> </section>
 ```
 
-### data-external-replace
+### `data-external-replace`
 
 Will replace the node with the loaded content. 
 
@@ -46,6 +58,8 @@ Will replace the node with the loaded content.
 ```
 
 ### Load Fragments
+
+_Note: this functionality is still to be tested with the updated `external.js`_
 
 You can specify a CSS selector to add only a part of the loaded content. 
 
@@ -57,26 +71,18 @@ You can specify a CSS selector to add only a part of the loaded content.
 
 ```javascript
 external: {
-    async: false,
     mapAttributes: ['src']
 }
 ```
 
-#### async
-
-By default the external files will be loaded synchronously. This avoids conflicts with other plugins.
-You can activate asynchronous loading with this option.
-
-#### mapAttributes
-
 By default the plugin will convert relative paths (dot as first character) in `src` attributes. This
 allows you to specify the path relative to the file you're in, rather then the one it is included in.
 
-Set to `false` to disable, or provide an array of attribute names.
+Set `mapAttributes` to `false` to disable, or provide an array of attribute names.
 
 ### Recursion
 
-If you want to load external files, you have to choose relative paths in the "data-external*"-attribute. In the following there is a simple example of how to include many files in one reveal presentation: 
+If you want to load external files, you have to choose relative paths in the `data-external*`-attribute. In the following there is a simple example of how to include many files in one reveal presentation: 
 
 Folder structure: 
 
@@ -130,6 +136,6 @@ It is also possible to include files outside of _section_-tags, as this would re
 
 ## Credits
 
-By: [Jan Schoepke](https://github.com/janschoepke), originally by [Cal Evans](https://github.com/calevans). Thanks to [Thomas Weinert](https://github.com/ThomasWeinert) for massive improvements in version 1.3!
+Previous version by [Jan Schoepke](https://github.com/janschoepke) ("Thanks to [Thomas Weinert](https://github.com/ThomasWeinert) for massive improvements in version 1.3!"), originally by [Cal Evans](https://github.com/calevans),
 
 License: MIT
