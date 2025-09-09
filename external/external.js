@@ -83,7 +83,8 @@ const Plugin = () => {
             let nodes = target.fragment !== ''
                 ? html.querySelectorAll(target.fragment)
                 : source.childNodes;
-            nodes = Array.from(nodes); // ensure we have an array
+			// ensure array with only elements, no stray text nodes
+			nodes = Array.from(nodes).filter(n => n.nodeType === 1); 
             if (!target.isReplace) {
                 section.innerHTML = '';
             }
